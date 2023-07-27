@@ -1,12 +1,51 @@
+(defwidget status_bar []
+    (centerbox :orientation "h"
+        (workspaces)
+        (programs)
+        (tray)
+    )  
+)
+
+(defwidget workspaces []
+    (box :class "workspaces" :orientation "h" :space-evenly false :halign "end")
+)
+
+(defwidget programs []
+    (box :class "programs" :orientation "h" :space-evenly false :halign "end"
+)
+)
+
+(defwidget tray []
+    (box :class "tray" :orientation "h" :space-evenly false :halign "end"
+        (box :class "time" :orientation "h" :space-evenly false :halign "end"
+            time
+        )
+        (box :class "date" :orientation "h" :space-evenly false :halign "end"
+            date
+        )       
+    
+
+        
+    )
+)
+
+(defpoll time :interval "1s"
+              :run-while time-visible   ; optional, defaults to 'true'
+  `date +%H:%M:%S `)
+
+(defpoll date :interval "60s"
+              :run-while time-visible   ; optional, defaults to 'true'
+              "date '+%d. %Bta, %Y'")
+
 (defwindow bar
            :monitor 1
+           :windowtype "dock"
            :geometry (geometry :x "0%"
                                :y "10px"
-                               :width "1900px"
-                               :height "30px"
+                               :width "1898px"
+                               :height "35px"
                                :anchor "top center")
            :stacking "fg"
            :exclusive true
-    "asd"
-         
+    (status_bar)
 )

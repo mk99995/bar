@@ -1,0 +1,32 @@
+* {
+    all: unset; //Unsets everything so you can style everything from scratch
+}
+
+.bar {
+    all: unset;
+    background-color: #3a3a3a;
+    color: #e2e3e6;
+    border-radius: 7px;
+    font-weight: bold;
+
+    .tray {
+       background-color: #3a3a3a;
+       border-radius: 7px;
+       padding: 0px 2px;
+
+       box {
+        margin: 4px 2px;
+        padding: 0px 7px;
+        border-radius: 5px;
+        }
+
+        .time {
+            background-color: #9e8e64;
+        }
+        .date {
+            background-color: #a07979;
+        }
+    }
+    
+    
+  }
