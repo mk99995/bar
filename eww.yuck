@@ -1,4 +1,7 @@
-(defwidget status_bar []
+(defvar bar_visible true)
+
+(defwidget status_bar  []
+    
     (centerbox :orientation "h"
         (workspaces)
         (programs)
@@ -22,10 +25,7 @@
         )
         (box :class "date" :orientation "h" :space-evenly false :halign "end"
             date
-        )       
-    
-
-        
+        ) 
     )
 )
 
@@ -37,9 +37,9 @@
               :run-while time-visible   ; optional, defaults to 'true'
               "date '+%d. %Bta, %Y'")
 
-(defwindow bar
+
+(defwindow bar1
            :monitor 1
-           :windowtype "dock"
            :geometry (geometry :x "0%"
                                :y "10px"
                                :width "1898px"
@@ -47,5 +47,24 @@
                                :anchor "top center")
            :stacking "fg"
            :exclusive true
-    (status_bar)
+    (box :class "main_bar"
+        (status_bar)
+    )
+)
+
+(defwindow bar0
+    :monitor 0
+    :geometry (geometry :x "0%"
+                        :y "10px"
+                        :width "1898px"
+                        :height "35px"
+                        :anchor "top center")
+    :stacking "fg"
+    :exclusive true
+(box :class "main_bar"
+ (status_bar)
+)
+
+
+
 )
