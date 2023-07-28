@@ -1,8 +1,10 @@
 (defvar bar_visible true)
+(defpoll memory :interval "1s" "./scripts/memory")
+(defpoll disk :interval "30s" "./scripts/disc")
 
 (defwidget status_bar  []
     
-    (centerbox :orientation "h"
+    (centerbox :class "main_bar" :orientation "h"
         (workspaces)
         (programs)
         (tray)
@@ -20,12 +22,18 @@
 
 (defwidget tray []
     (box :class "tray" :orientation "h" :space-evenly false :halign "end"
-        (box :class "time" :orientation "h" :space-evenly false :halign "end"
+        (box :class "sysinfo" :orientation "h" :space-evenly false :halign "end"
+            "ram: "{memory} "% | cpu: "
+            {round(EWW_CPU.avg, 0)}"% | disk: "
+            {disk}
+        ) 
+        (box :class "time" :orientation "h" :space-evenly false :halign "end" 
             time
         )
         (box :class "date" :orientation "h" :space-evenly false :halign "end"
             date
-        ) 
+        )
+        
     )
 )
 
@@ -61,10 +69,5 @@
                         :anchor "top center")
     :stacking "fg"
     :exclusive true
-(box :class "main_bar"
- (status_bar)
-)
-
-
-
+    (status_bar)
 )

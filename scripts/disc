@@ -1,0 +1,3 @@
+#!/bin/sh
+
+df -h --output=pcent / | awk 'NR==2'
