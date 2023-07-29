@@ -8,11 +8,11 @@
     color: #e2e3e6;
     border-radius: 7px;
     font-weight: bold;
-
+    padding: 0px 1px;
+    
     .tray {
        background-color: #3a3a3a;
        border-radius: 7px;
-       padding: 0px 2px;
 
        box {
         margin: 4px 2px;
@@ -27,8 +27,31 @@
             background-color: #a07979;
         }
         .sysinfo {
-            background-color: #88a079;
+            background-color: #7d946f;
         }
+    }
+
+    .workspaces {
+        
+        .workspace-entry {
+            border-radius: 5px;
+            margin: 4px 2px;
+            padding: 0px 7px;
+            border-radius: 5px;
+            
+        }
+        .empty {
+            background-color: rgb(78, 112, 112);
+        }
+
+        .occupied {
+            background-color: rgb(106, 151, 151);
+        }
+
+        .current {
+            background-color: rgb(212, 131, 64);
+        }
+        
     }
     
     

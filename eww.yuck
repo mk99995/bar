@@ -1,19 +1,34 @@
 (defvar bar_visible true)
 (defpoll memory :interval "1s" "./scripts/memory")
 (defpoll disk :interval "30s" "./scripts/disc")
+(deflisten workspaces :initial "[]" "./scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "./scripts/get-active-workspace")
 
 (defwidget status_bar  []
     
-    (centerbox :class "main_bar" :orientation "h"
+    (centerbox :class "main_bar" :orientation "h" 
         (workspaces)
         (programs)
         (tray)
-    )  
+    )
 )
 
+
 (defwidget workspaces []
-    (box :class "workspaces" :orientation "h" :space-evenly false :halign "end")
-)
+  (eventbox :onscroll " ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}"
+    (box :class "workspaces" :space-evenly false
+      (for workspace in workspaces
+        (eventbox :class "asd" :onclick "hyprctl dispatch workspace ${workspace.id}"
+          (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+          :halign "start" :width 31
+          :visible {workspace.windows > 0 || workspace.id == current_workspace || workspace.id <= 5}
+            (label :yalign 0.6 :text "${workspace.id}")
+            )
+          )
+        )
+      )
+    )
+  )
 
 (defwidget programs []
     (box :class "programs" :orientation "h" :space-evenly false :halign "end"
@@ -23,15 +38,13 @@
 (defwidget tray []
     (box :class "tray" :orientation "h" :space-evenly false :halign "end"
         (box :class "sysinfo" :orientation "h" :space-evenly false :halign "end"
-            "ram: "{memory} "% | cpu: "
-            {round(EWW_CPU.avg, 0)}"% | disk: "
-            {disk}
+            (label :yalign 0.6 :text "ram: ${memory}% | cpu: ${round(EWW_CPU.avg, 0)}% | disk:${disk}")
         ) 
         (box :class "time" :orientation "h" :space-evenly false :halign "end" 
-            time
+            (label :yalign 0.6 :text "${time}")
         )
         (box :class "date" :orientation "h" :space-evenly false :halign "end"
-            date
+            (label :yalign 0.6 :text "${date}")
         )
         
     )
@@ -45,29 +58,17 @@
               :run-while time-visible   ; optional, defaults to 'true'
               "date '+%d. %Bta, %Y'")
 
-
 (defwindow bar1
            :monitor 1
            :geometry (geometry :x "0%"
                                :y "10px"
                                :width "1898px"
-                               :height "35px"
+                               :height "34px"
                                :anchor "top center")
-           :stacking "fg"
+           :stacking "bg"
            :exclusive true
     (box :class "main_bar"
         (status_bar)
     )
 )
 
-(defwindow bar0
-    :monitor 0
-    :geometry (geometry :x "0%"
-                        :y "10px"
-                        :width "1898px"
-                        :height "35px"
-                        :anchor "top center")
-    :stacking "fg"
-    :exclusive true
-    (status_bar)
-)
