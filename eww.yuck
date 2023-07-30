@@ -1,7 +1,7 @@
 (defvar bar_visible true)
 (defpoll memory :interval "1s" "./scripts/memory")
 (defpoll disk :interval "30s" "./scripts/disc")
-(deflisten workspaces :initial "[]" "./scripts/get-workspaces")
+(deflisten workspaces :initial "[]" "./scripts/get-workspaces-light")
 (deflisten current_workspace :initial "1" "./scripts/get-active-workspace")
 
 (defwidget status_bar  []
@@ -17,22 +17,45 @@
 (defwidget workspaces []
   (eventbox :onscroll " ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}"
     (box :class "workspaces" :space-evenly false
-      (for workspace in workspaces
-        (eventbox :class "asd" :onclick "hyprctl dispatch workspace ${workspace.id}"
-          (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
-          :halign "start" :width 31
-          :visible {workspace.windows > 0 || workspace.id == current_workspace || workspace.id <= 5}
-            (label :yalign 0.6 :text "${workspace.id}")
-            )
-          )
-        )
-      )
+      (worspace :id 1)
+      (worspace :id 2)
+      (worspace :id 3)
+      (worspace :id 4)
+      (worspace :id 5)
+      (worspace :id 6)
+      (worspace :id 7)
+      (worspace :id 8)
+      (worspace :id 9)
+      (worspace :id 10)
+
+      ;(for workspace in workspaces
+      ;  (eventbox :class "asd" :onclick "hyprctl dispatch workspace ${workspace.id}"
+      ;    (box 
+      ;    :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+      ;    :halign "start" :width 31
+      ;    :visible {workspace.windows > 0 || workspace.id == current_workspace || workspace.id <= 5}
+      ;      (label :yalign 0.6 :text "${workspace.id}")
+      ;    )
+      ;  )
+      ;)
     )
   )
+)
+
+(defwidget worspace [id]
+  (eventbox :onclick "hyprctl dispatch workspace ${id}"
+    (box 
+    :class "workspace-entry ${id == current_workspace ? "current" : ""} ${workspaces[id - 1] > 0 ? "occupied" : "empty"}"
+    :halign "start" :width 31
+    :visible { workspaces[id - 1] > 0 || id == current_workspace || id <= 5}
+      (label :yalign 0.6 :text "${id}")
+    )
+  )
+)
 
 (defwidget programs []
-    (box :class "programs" :orientation "h" :space-evenly false :halign "end"
-)
+  (box :class "programs" :orientation "h" :space-evenly false :halign "end"
+  )
 )
 
 (defwidget tray []
@@ -59,16 +82,31 @@
               "date '+%d. %Bta, %Y'")
 
 (defwindow bar1
-           :monitor 1
-           :geometry (geometry :x "0%"
-                               :y "10px"
-                               :width "1898px"
-                               :height "34px"
-                               :anchor "top center")
-           :stacking "bg"
-           :exclusive true
-    (box :class "main_bar"
-        (status_bar)
-    )
+  :monitor 1
+  :geometry (geometry 
+              :x "0%"
+              :y "10px"
+              :width "1898px"
+              :height "34px"
+              :anchor "top center")
+  :stacking "bg"
+  :exclusive true
+  (box :class "main_bar"
+    (status_bar)
+  )
 )
 
+(defwindow bar2
+  :monitor 0
+  :geometry (geometry 
+              :x "0%"
+              :y "10px"
+              :width "1898px"
+              :height "34px"
+              :anchor "top center")
+  :stacking "bg"
+  :exclusive true
+  (box :class "main_bar"
+    (status_bar)
+  )
+)
