@@ -1,16 +1,18 @@
 (defvar bar_visible true)
+(defvar cal_visible false)
 (defpoll memory :interval "1s" "./scripts/memory")
 (defpoll disk :interval "30s" "./scripts/disc")
 (deflisten workspaces :initial "[]" "./scripts/get-workspaces-light")
 (deflisten current_workspace :initial "1" "./scripts/get-active-workspace")
 
 (defwidget status_bar  []
-    
-    (centerbox :class "main_bar" :orientation "h" 
-        (workspaces)
-        (programs)
-        (tray)
-    )
+  
+  (centerbox :class "main_bar" :orientation "h" 
+    (workspaces)
+    (programs)
+    (tray)
+  )
+  
 )
 
 
@@ -61,14 +63,20 @@
 (defwidget tray []
     (box :class "tray" :orientation "h" :space-evenly false :halign "end"
         (box :class "sysinfo" :orientation "h" :space-evenly false :halign "end"
-            (label :yalign 0.6 :text "ram: ${memory}% | cpu: ${round(EWW_CPU.avg, 0)}% | disk:${disk}")
+          (label :yalign 0.6 :text "ram: ${memory}% | cpu: ${round(EWW_CPU.avg, 0)}% | disk:${disk}")
         ) 
         (box :class "time" :orientation "h" :space-evenly false :halign "end" 
-            (label :yalign 0.6 :text "${time}")
+          (label :yalign 0.6 :text "${time}")
         )
-        (box :class "date" :orientation "h" :space-evenly false :halign "end"
+        (eventbox
+          :onclick "./scripts/cal/cal-toggle"
+          :onhover "./scripts/cal/cal-hover-open"
+          :onhoverlost "./scripts/cal/cal-hover-close"
+          (box :class "date" :orientation "h" :space-evenly false :halign "end"
             (label :yalign 0.6 :text "${date}")
+          )
         )
+        
         
     )
 )
@@ -96,7 +104,7 @@
   )
 )
 
-(defwindow bar2
+(defwindow bar0
   :monitor 0
   :geometry (geometry 
               :x "0%"
@@ -110,3 +118,16 @@
     (status_bar)
   )
 )
+
+(defwidget cal []
+  (calendar :show-week-numbers true)
+)
+
+(defwindow calendar
+  :monitor 1
+    :geometry (geometry :x "1640px" 
+              :y "10px" 
+              :width "270px" 
+              :height "60px")
+  (cal))
+

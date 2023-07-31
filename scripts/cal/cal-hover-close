@@ -1,0 +1,7 @@
+#!/bin/sh
+if ! $(eww get cal_visible)
+
+then
+    eww close calendar
+
+fi

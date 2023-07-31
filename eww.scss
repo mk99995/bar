@@ -1,17 +1,29 @@
+$gray: #3a3a3a;
+$black: #272727;
+$white: #e2e3e6;
+$red: #a07979;
+$green: #7d946f;
+$yellow: #9e8e64;
+$orange: rgb(212, 131, 64);
+$teal: rgb(78, 112, 112);
+$teal-light: rgb(106, 151, 151);
+
+
+
 * {
     all: unset; //Unsets everything so you can style everything from scratch
 }
 
 .main_bar {
     all: unset;
-    background-color: #3a3a3a;
-    color: #e2e3e6;
+    background: rgb(58,58,58);
+    background: linear-gradient(180deg, rgba(58,58,58,1) 48%, rgba(49,49,49,1) 75%, rgba(39,39,39,1) 100%); 
     border-radius: 7px;
     font-weight: bold;
     padding: 0px 1px;
     
     .tray {
-       background-color: #3a3a3a;
+      
        border-radius: 7px;
 
        box {
@@ -56,4 +68,23 @@
     }
     
     
-  }
+}
+
+.calendar {
+    background-color: $gray;
+    color: $white;
+    border-radius: 7px;
+    
+
+    .header {
+        background-color: $black;
+        padding: 5px;
+        border-radius: 7px 7px 0px 0px;
+    }
+    
+    :selected {
+        background-color: $orange;
+        border-radius: 3px;
+        
+    }
+}

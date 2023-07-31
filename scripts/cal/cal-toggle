@@ -1,0 +1,16 @@
+#!/bin/sh
+eww open calendar
+
+if $(eww get cal_visible)
+
+then
+
+    eww close calendar
+    eww update cal_visible=false
+
+else
+
+    eww open calendar
+    eww update cal_visible=true
+
+fi
