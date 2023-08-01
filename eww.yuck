@@ -87,7 +87,7 @@
 
 (defpoll date :interval "60s"
               :run-while time-visible   ; optional, defaults to 'true'
-              "date '+%d. %Bta, %Y'")
+              "date '+%-d. %Bta, %Y'")
 
 (defwindow bar1
   :monitor 1
